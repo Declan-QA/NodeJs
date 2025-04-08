@@ -40,7 +40,6 @@ form.addEventListener('submit', function(event) {
     outputarr.push(["skills",skillsarr])
     const sendata = Object.fromEntries(outputarr)
         //  document.getElementById("email").insertAdjacentHTML("afterend","<p>Make sure email ends in a valid domain</p>")
-    console.log(`{email:${sendata.email}}`)
         
     fetch('http://localhost:3000/validateEmail', {
         method: "POST",
@@ -50,14 +49,13 @@ form.addEventListener('submit', function(event) {
         body: JSON.stringify({ email: sendata.email })
     }).then(response => response.json())
     .then(result => {
+        console.log(result)
         data = result.data
         length= data.length
         if (data === true){
             console.log("Progress");            
         } else{
-            for (let i = 0; i < length; i++) {
-                emailnode.insertAdjacentHTML("afterend",data[i])
-            }
+            emailnode.insertAdjacentHTML("afterend",data)
         }
 
     })

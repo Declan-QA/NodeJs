@@ -18,7 +18,9 @@ app.post("/validateEmail",middle, function(request,response){
     if (validateEmailDomain(request.body.email)){
         responsedata = true
     } else {
-        responsedata = ["<p>Error</p>","<p>Email must end in vald domain</p>"]
+        responsedata = [
+            "<p class='error'>Email must end in valid domain e.g. .io,.co.uk,.com</p>"
+        ]
     }
     response.json({ "data": responsedata });
 });

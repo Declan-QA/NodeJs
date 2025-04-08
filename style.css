@@ -1,15 +1,18 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    
 }
 form {
     margin-bottom: 20px;
 }
 input, button {
-    padding: 10px;
+    padding: 5px;
     margin: 5px;
     font-size: 14px;
 }
-#skills-list {
-    margin-top: 20px;
+
+.error{
+    color: red;
+    font-size: 70%;
 }
