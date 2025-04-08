@@ -49,80 +49,58 @@ form.addEventListener('submit', function(event) {
     const sendata = Object.fromEntries(outputarr)
         //  document.getElementById("email").insertAdjacentHTML("afterend","<p>Make sure email ends in a valid domain</p>")
     let passes = 0;
-    fetch('http://localhost:3000/validateEmail', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email: sendata.email })
-    }).then(response => response.json())
-    .then(result => {
-        data = result.data
-        length= data.length
-        if (data === true){
-            console.log("rmail_clear")
-            passes +=1
-            console.log(passes)
-        } else{
-            emailclear=false
-            emailnode.insertAdjacentHTML("afterend",data)
-        }
+    const validationPromises = [
+        fetch('http://localhost:3000/validateEmail', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email: sendata.email })
+        }).then(response => response.json()).then(result => {
+            if (result.data === true) {
+                passes += 1;
+            } else {
+                emailnode.insertAdjacentHTML("afterend", result.data);
+            }
+        }),
 
-    })
-    .catch(error => {
+        fetch('http://localhost:3000/validateDate', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ birthday: sendata.birthday })
+        }).then(response => response.json()).then(result => {
+            if (result.data === true) {
+                passes += 1;
+            } else {
+                birthdaynode.insertAdjacentHTML("afterend", result.data);
+            }
+        }),
+
+        fetch('http://localhost:3000/validatePassword', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ password: sendata.password })
+        }).then(response => response.json()).then(result => {
+            if (result.data === true) {
+                passes += 1;
+            } else {
+                passwordnode.insertAdjacentHTML("afterend", result.data);
+            }
+        })
+    ];
+
+    // Wait for all fetch requests to complete
+    Promise.all(validationPromises).then(() => {
+        if (passes === 3) {
+            localStorage.setItem("user", JSON.stringify(sendata));
+            window.location.href = "Home.html";
+        }
+    }).catch(error => {
         console.error('Error:', error);
     });
-
-    fetch('http://localhost:3000/validateDate', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ birthday: sendata.birthday })
-    }).then(response => response.json())
-    .then(result => {
-
-        data = result.data
-        length= data.length
-        if (data === true){
-            console.log("date_clear")
-            passes +=1
-            console.log(passes)
-        } else{
-            birthdayclear = false
-            birthdaynode.insertAdjacentHTML("afterend",data)
-        }
-
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-
-    fetch('http://localhost:3000/validatePassword', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ password: sendata.password })
-    }).then(response => response.json())
-    .then(result => {
-        data = result.data
-        length= data.length
-        if (data === true){
-            console.log("pass_clear")
-            passes +=1
-            console.log(passes)
-        } else{
-            passwordnode.insertAdjacentHTML("afterend",data)
-        }
-
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-
-    if (passes ==3){
-        
-    }
 });
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { paswordcheck, validateDate, validateEmailDomain } from './functions.js';
+import { paswordcheck, validateDate, validateEmailDomain } from './functions.js';;
 console.log("Please run index.html with:\n  Your Webbrowser\n  Live Server Extension \nNot: \n  Live preview")
 const app = express();
 
@@ -8,9 +8,7 @@ app.use(cors());
 const middle = express.json();
 
 
-app.post('/upload', middle,function(request, response) {
-   console.log(request.body);
-});
+
 
 app.post("/validateEmail",middle, function(request,response){
     let responsedata;
@@ -46,5 +44,7 @@ app.post("/validatePassword",middle, function(request,response){
     }
     response.json({ "data": responsedata });
 });
+
+
 
 app.listen(3000);

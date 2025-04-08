@@ -3,14 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Profile</title>
+    <script>
+        window.onload = function() {
+            const body = document.body;
+            const data = JSON.parse(localStorage.getItem("user")) || {};
+
+            // Main user info
+            const userInfo = `
+                <h2>Welcome ${data.firstName || 'User'} ${data.lastName || ''}</h2>
+                <p id="birthday">Birthdate: ${data.birthday || 'Not specified'}</p>
+                <p id="email">Email: ${data.email || 'Not provided'}</p>
+            `;
+
+            // Skills section
+            let skillsSection = '<section id="skills">';
+            if (Array.isArray(data.skills) && data.skills.length) {
+                skillsSection += '<h3>Skills</h3><ul>';
+                data.skills.forEach(skill => {
+                    skillsSection += `<li>${skill}</li>`;
+                });
+                skillsSection += '</ul>';
+            } else {
+                skillsSection += '<p>No skills listed</p>';
+            }
+            skillsSection += '</section>';
+
+            // Insert all content
+            body.innerHTML = userInfo + skillsSection;
+        };
+    </script>
 </head>
 <body>
-    <h2>Welcome </h2>
-    <p id="birthday">You were born on </p>
-    <p id="email">Your email is </p>
-    <p>Your Skills Are</p>
-    <ul id="Skill">
-    </ul>
 </body>
 </html>
