@@ -1,2 +1,3 @@
-# NodeJs
-Using Node js and Sqlite
+# NodeJSProject
+SImple Node Application
+with sqlite and express

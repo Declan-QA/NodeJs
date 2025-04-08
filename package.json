@@ -1,0 +1,23 @@
+{
+    "type": "module",
+    "name": "unittest",
+    "version": "1.0.0",
+    "description": "Tests and starting the backend server",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha ./spec/*.spec.js",
+        "start": "node Backend.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "chai": "^5.1.2",
+        "mocha": "^11.1.0"
+    },
+    "keywords": [],
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^5.1.0",
+        "sqlite3": "^5.1.7"
+    }
+}
