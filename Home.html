@@ -8,6 +8,22 @@
         const title = (inputstr) => {
             return inputstr[0].toUpperCase() + inputstr.slice(1) 
         }
+
+        const formatDate = (date) =>{
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+            const dateobj = new Date(date)
+            const yyyy = dateobj.getFullYear();
+            let mm = dateobj.getMonth() + 1; 
+            let dd = dateobj.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            return `${days[dateobj.getDay()]} ${dd} ${months[mm-1]} ${yyyy}`
+
+        }
         window.onload = function() {
             const body = document.body;
             const data = JSON.parse(localStorage.getItem("user")) || {};
@@ -15,7 +31,7 @@
             // Main user info
             const userInfo = `
                 <h2>Welcome ${title(data.firstName) || 'User'} ${title(data.lastName) || ''}</h2>
-                <p id="birthday">Birthdate: ${data.birthday || 'Not specified'}</p>
+                <p id="birthday">Birthdate: ${formatDate(data.birthday) || 'Not specified'}</p>
                 <p id="email">Email: ${data.email || 'Not provided'}</p>
             `;
 
