@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <script>
+        const title = (inputstr) => {
+            return inputstr[0].toUpperCase() + inputstr.slice(1) 
+        }
         window.onload = function() {
             const body = document.body;
             const data = JSON.parse(localStorage.getItem("user")) || {};
 
             // Main user info
             const userInfo = `
-                <h2>Welcome ${data.firstName || 'User'} ${data.lastName || ''}</h2>
+                <h2>Welcome ${title(data.firstName) || 'User'} ${title(data.lastName) || ''}</h2>
                 <p id="birthday">Birthdate: ${data.birthday || 'Not specified'}</p>
                 <p id="email">Email: ${data.email || 'Not provided'}</p>
             `;
@@ -21,7 +24,7 @@
             if (Array.isArray(data.skills) && data.skills.length) {
                 skillsSection += '<h3>Skills</h3><ul>';
                 data.skills.forEach(skill => {
-                    skillsSection += `<li>${skill}</li>`;
+                    skillsSection += `<li>${title(skill)}</li>`;
                 });
                 skillsSection += '</ul>';
             } else {
