@@ -1,5 +1,5 @@
 const title = (inputstr) => {
-    return inputstr[0].toUpperCase() + inputstr.slice(1) 
+    return inputstr.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() + letter.slice(1)).join(' '); 
 }
 
 document.getElementById('add-skill').addEventListener('click', function() {
