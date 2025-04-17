@@ -47,10 +47,9 @@ form.addEventListener('submit', function(event) {
 
     
     senddata["skills"] = skillsarr
-    //  document.getElementById("email").insertAdjacentHTML("afterend","<p>Make sure email ends in a valid domain</p>")
     let passes = 0;
     const validationPromises = [
-        fetch('http://localhost:3000/validateEmail', {
+        fetch('/validateEmail', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -64,7 +63,7 @@ form.addEventListener('submit', function(event) {
             }
         }),
 
-        fetch('http://localhost:3000/validateDate', {
+        fetch('/validateDate', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -78,7 +77,7 @@ form.addEventListener('submit', function(event) {
             }
         }),
 
-        fetch('http://localhost:3000/validatePassword', {
+        fetch('validatePassword', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -97,7 +96,7 @@ form.addEventListener('submit', function(event) {
     Promise.all(validationPromises).then(() => {
         if (passes === 3) {
             localStorage.setItem("user", JSON.stringify(senddata));
-            window.location.href = "./Home.html";
+            window.location.href = "src/Home.html"
         }
     }).catch(error => {
         console.error('Error:', error);

@@ -1,14 +1,15 @@
 import express from 'express';
-import cors from 'cors';
-import { paswordcheck, validateDate, validateEmailDomain } from './functions.js';;
-console.log("Please run index.html with:\n  Your Webbrowser\n  Live Server Extension \nNot: \n  Live preview")
+import { paswordcheck, validateDate, validateEmailDomain } from './functions.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
-
-app.use(cors()); 
 const middle = express.json();
+console.log("Please open the url: http://localhost:3000")
 
-
-
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/src', express.static(path.join(__dirname, 'src')));
 
 app.post("/validateEmail",middle, function(request,response){
     let responsedata;
@@ -44,6 +45,11 @@ app.post("/validatePassword",middle, function(request,response){
     }
     response.json({ "data": responsedata });
 });
+
+
+app.get("/",function(request,response){
+    response.sendFile(path.join(__dirname, "/src/index.html"));
+})
 
 
 
